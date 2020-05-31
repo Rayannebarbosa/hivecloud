@@ -1,11 +1,5 @@
 CREATE DATABASE transp;
 
-CREATE USER 'hive'@'%' IDENTIFIED BY '123';
-
-GRANT ALL ON *.* TO 'hive'@'%' WITH GRANT OPTION;
-
-flush privileges;
-
 USE transp;
 
 /***** TABELA TRANSPORTADORAS *****/
