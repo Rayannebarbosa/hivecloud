@@ -19,4 +19,3 @@ CREATE TABLE tb_transportadoras (
   endereco varchar (255),
   numero int  
 );
-/*****************/
