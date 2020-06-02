@@ -18,6 +18,7 @@ public class Transportadoras {
     private String bairro;
     private String endereco;
     private int numero;
+    private int id;
 
     public String getNome() {
         return nome;
@@ -113,6 +114,14 @@ public class Transportadoras {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }
