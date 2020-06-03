@@ -2,6 +2,7 @@ package br.com.projeto.dao;
 
 import br.com.projeto.jdbc.ConnectionFactory;
 import br.com.projeto.model.Transportadoras;
+import br.com.projeto.model.WebServiceCep;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -155,6 +156,108 @@ public class TransportadorasDAO {
         } catch (SQLException erro) {
 
             JOptionPane.showMessageDialog(null, "Erro: " + erro);
+            return null;
+        }
+
+    }
+
+    //Metodo consultar por nome
+    public Transportadoras consultaPorNome(String nome) {
+        try {
+            String sql = "SELECT * FROM tb_transportadoras where nome = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, nome);
+
+            ResultSet rs = stmt.executeQuery();
+            Transportadoras obj = new Transportadoras();
+
+            if (rs.next()) {
+
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setEmail(rs.getString("email"));
+                obj.setEmpresa(rs.getString("empresa"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setWhatsapp(rs.getString("whatsapp"));
+                obj.setCep(rs.getString("cep"));
+                obj.setEstado(rs.getString("estado"));
+                obj.setCidade(rs.getString("cidade"));
+                obj.setBairro(rs.getString("bairro"));
+                obj.setEndereco(rs.getString("endereco"));
+                obj.setNumero(rs.getInt("numero"));
+            }
+            return obj;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Transportadora não encontrada!");
+            return null;
+        }
+
+    }
+
+    //Metodo filtrar por nome (lista)
+    public List<Transportadoras> filtrarPorNome(String nome) {
+        try {
+
+            //Criação da lista
+            List<Transportadoras> lista = new ArrayList<>();
+
+            //Comando SQL
+            String sql = "SELECT * FROM tb_transportadoras where nome like ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, nome);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Transportadoras obj = new Transportadoras();
+
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setEmail(rs.getString("email"));
+                obj.setEmpresa(rs.getString("empresa"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setWhatsapp(rs.getString("whatsapp"));
+                obj.setCep(rs.getString("cep"));
+                obj.setEstado(rs.getString("estado"));
+                obj.setCidade(rs.getString("cidade"));
+                obj.setBairro(rs.getString("bairro"));
+                obj.setEndereco(rs.getString("endereco"));
+                obj.setNumero(rs.getInt("numero"));
+
+                lista.add(obj);
+            }
+
+            return lista;
+
+        } catch (SQLException erro) {
+
+            JOptionPane.showMessageDialog(null, "Erro: " + erro);
+            return null;
+        }
+
+    }
+    
+    //Busca CEP
+    	  public Transportadoras buscaCep(String cep) {
+       
+        WebServiceCep webServiceCep = WebServiceCep.searchCep(cep);
+       
+
+        Transportadoras obj = new Transportadoras();
+
+        if (webServiceCep.wasSuccessful()) {
+            obj.setEndereco(webServiceCep.getLogradouroFull());
+            obj.setCidade(webServiceCep.getCidade());
+            obj.setBairro(webServiceCep.getBairro());
+            obj.setEstado(webServiceCep.getUf());
+            
+            return obj;
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro numero: " + webServiceCep.getResulCode());
+            JOptionPane.showMessageDialog(null, "Descrição do erro: " + webServiceCep.getResultText());
             return null;
         }
 

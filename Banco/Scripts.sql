@@ -19,3 +19,14 @@ CREATE TABLE tb_transportadoras (
   endereco varchar (255),
   numero int  
 );
+
+/***** TABELA USUARIO *****/
+CREATE TABLE tb_usuario (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR (100),
+  senha VARCHAR (100)
+);
+
+INSERT INTO transp.tb_usuario (email, senha) VALUES ('rayannelisse@hotmail.com', '1234'); 
+INSERT INTO transp.tb_usuario (email, senha) VALUES ('hivecloud@hotmail.com', '1234'); 
+INSERT INTO transp.tb_usuario (email, senha) VALUES ('teste@teste.com', '1234'); 
